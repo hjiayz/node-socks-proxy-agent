@@ -141,7 +141,12 @@ function connect (req, _opts, fn) {
     },
     command: 'connect'
   };
-
+  if (proxy.auth){
+    var auth=proxy.auth.split(":");
+    var optp=options.proxy;
+    optp.authentication={"username":auth[0],"password":auth[1]};
+    optp.userid=auth[0];
+  }
   if (proxy.lookup) {
     // client-side DNS resolution for "4" and "5" socks proxy versions
     dns.lookup(opts.host, onlookup);
